@@ -14,7 +14,6 @@
 
 	// JSON Data that displays when viewing the Page
 	$json_data = array(
-		'template' => get_page_template(),
 		'page_information' => $page_information,
 		'page_content' 		 => $page_content
 	);
