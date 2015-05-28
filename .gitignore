@@ -1,0 +1,16 @@
+#App
+app/scripts/vendor
+app/styles/vendor
+
+#Bower
+bower_components
+
+#MISC
+app.yaml
+
+#Node
+node_modules
+
+#Test and Distribution
+dist
+.tmp
