@@ -38,7 +38,11 @@ var packageJson = require('./package.json');
 
 // Lint JavaScript
 gulp.task('jshint', function () {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src([
+    'app/frontend/library/scripts/**/*.js',
+    '!app/frontend/library/scripts/angularjs/**/*',
+    '!app/frontend/library/scripts/vendor/**/*'
+  ])
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
@@ -47,12 +51,12 @@ gulp.task('jshint', function () {
 
 // Optimize images
 gulp.task('images', function () {
-  return gulp.src('app/images/**/*')
+  return gulp.src('app/frontend/library/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true
     })))
-    .pipe(gulp.dest('dist/images'))
+    .pipe(gulp.dest('dist/frontend/library/images'))
     .pipe($.size({title: 'images'}));
 });
 
@@ -60,6 +64,7 @@ gulp.task('images', function () {
 gulp.task('copy', function () {
   return gulp.src([
     'app/*',
+    'app/**/*.php',
     '!app/*.html',
     'node_modules/apache-server-configs/dist/.htaccess'
   ], {
@@ -70,11 +75,13 @@ gulp.task('copy', function () {
 
 // Copy web fonts to dist
 gulp.task('fonts', function () {
-  return gulp.src(['app/fonts/**'])
-    .pipe(gulp.dest('dist/fonts'))
+  return gulp.src([
+    'app/library/fonts/**',
+    '!app/library/fonts/vendor'
+  ])
+    .pipe(gulp.dest('dist/frontend/library/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
-
 
 // Compile and automatically prefix stylesheets
 gulp.task('styles', function () {
@@ -95,10 +102,10 @@ gulp.task('styles', function () {
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    'app/**/*.scss',
-    'app/styles/**/*.css'
+    'app/frontend/library/styles/**/*.scss',
+    '!app/frontend/library/styles/vendor'
   ])
-    .pipe($.changed('.tmp/styles', {extension: '.css'}))
+    .pipe($.changed('.tmp/styles', {extension: '.css,scss'}))
     .pipe($.sourcemaps.init())
     .pipe($.sass({
       precision: 10
@@ -108,18 +115,21 @@ gulp.task('styles', function () {
     // Concatenate and minify styles
     .pipe($.if('*.css', $.csso()))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist/frontend/library/styles'))
     .pipe($.size({title: 'styles'}));
 })
 
 // Concatenate and minify JavaScript
 gulp.task('scripts', function () {
-  var sources = ['./app/scripts/main.js'];
+  var sources = [
+    'app/frontend/library/scripts/**/*.js',
+    '!app/frontend/library/scripts/vendor'
+  ];
   return gulp.src(sources)
     .pipe($.concat('main.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
-    .pipe(gulp.dest('dist/scripts'))
+    .pipe(gulp.dest('dist/frontend/library/scripts'))
     .pipe($.size({title: 'scripts'}));
 });
 
@@ -127,14 +137,14 @@ gulp.task('scripts', function () {
 gulp.task('html', function () {
   var assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
-  return gulp.src('app/**/**/*.html')
+  return gulp.src('app/frontend/**/**/*.html')
     .pipe(assets)
     // Remove any unused CSS
     // Note: If not using the Style Guide, you can delete it from
     // the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
-        'app/index.html'
+        'app/frontend/index.html'
       ],
       // CSS Selectors for UnCSS to ignore
       ignore: [
@@ -152,7 +162,7 @@ gulp.task('html', function () {
     // Minify any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     // Output files
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist/frontend'))
     .pipe($.size({title: 'html'}));
 });
 
@@ -177,9 +187,9 @@ gulp.task('serve', ['styles'], function () {
   // Watch the .php files for auto reload
   gulp.watch(['app/**/*.php'], reload);
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint']);
-  gulp.watch(['app/images/**/*'], reload);
+  gulp.watch(['app/**/*.{scss,css}'], ['styles', reload]);
+  gulp.watch(['app/**/*.js'], ['jshint']);
+  gulp.watch(['app/**/*'], reload);
 });
 
 // Watch files for changes & reload
@@ -285,3 +295,17 @@ gulp.task('generate-service-worker', function (callback) {
 
 // Load custom tasks from the `tasks` directory
 // try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
+
+// Bower
+// -- Copy Bower content from 'bower_components' to the 'frontend' folder
+gulp.task('bower', function() {
+  // Copy Fonts
+  gulp.src('./bower_components/**/*.{eot,otf,svg,ttf,woff,woff2}')
+    .pipe(gulp.dest('app/frontend/library/fonts/vendor'))
+  // Copy Scripts
+  gulp.src('./bower_components/**/*.js')
+    .pipe(gulp.dest('app/frontend/library/scripts/vendor'))
+  // Copy Styles
+  gulp.src('./bower_components/**/*.{css,scss}')
+    .pipe(gulp.dest('app/frontend/library/styles/vendor'))
+});

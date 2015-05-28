@@ -1,6 +1,7 @@
 #App
-app/scripts/vendor
-app/styles/vendor
+app/frontend/library/fonts/vendor
+app/frontend/library/scripts/vendor
+app/frontend/library/styles/vendor
 
 #Bower
 bower_components
