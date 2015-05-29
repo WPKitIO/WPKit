@@ -1,6 +1,8 @@
 <!doctype html>
-<html lang="">
+<html lang="" ng-app="wpKit">
   <head>
+    <base href="/">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
@@ -36,36 +38,26 @@
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
-    <header class="app-bar promote-layer">
-      <div class="app-bar-container">
-        <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
-        <h1 class="logo">Web <strong>Starter Kit</strong></h1>
-        <section class="app-bar-actions">
-        <!-- Put App Bar Buttons Here -->
-        <!-- e.g <button><i class="icon icon-star"></i></button> -->
-        </section>
-      </div>
-    </header>
 
-    <nav class="navdrawer-container promote-layer">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="#hello">Hello</a></li>
-        <li><a href="#get-started">Get Started</a></li>
-        <li><a href="styleguide.html">Style Guide</a></li>
-      </ul>
-    </nav>
-
-    <main>
-      <h1 id="hello">Hello!</h1>
-      <p>Welcome to Web Starter Kit.</p>
-
-      <h2 id="get-started">Get Started.</h2>
-      <p>Read how to <a href="https://developers.google.com/web/starter-kit">Get Started</a> or check out the <a href="styleguide.html">Style Guide</a>.</p>
-    </main>
+    <main ng-view></main>
 
     <!-- build:js(app/) ../../scripts/main.min.js -->
-    <script src="scripts/main.js"></script>
+      <!-- VENDOR SCRIPTS -->
+      <script src="library/scripts/vendor/angular/angular.js"></script>
+      <script src="library/scripts/vendor/angular-resource/angular-resource.js"></script>
+      <script src="library/scripts/vendor/angular-route/angular-route.js"></script>
+      <script src="library/scripts/vendor/angular-sanitize/angular-sanitize.js"></script>
+
+      <script src="library/scripts/app.js"></script>
+      <!-- Controllers -->
+      <script src="library/scripts/controllers/main.js"></script>
+
+      <!-- Services -->
+      <script src="library/scripts/services/configuration.js"></script>
+      <script src="library/scripts/services/mainFactory.js"></script>
+
+      <!-- Other -->
+      <script src="library/scripts/main.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
