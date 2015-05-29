@@ -24,16 +24,16 @@
 var wordpress_path = 'wpkit';
 
 // Include gulp & tools we'll use
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
+var gulp        = require('gulp');
+var $           = require('gulp-load-plugins')();
+var del         = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
-var pagespeed = require('psi');
-var reload = browserSync.reload;
-var swPrecache = require('sw-precache');
-var fs = require('fs');
-var path = require('path');
+var pagespeed   = require('psi');
+var reload      = browserSync.reload;
+var swPrecache  = require('sw-precache');
+var fs          = require('fs');
+var path        = require('path');
 var packageJson = require('./package.json');
 
 // Lint JavaScript
@@ -98,8 +98,6 @@ gulp.task('styles', function () {
     'bb >= 10'
   ];
 
-
-
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
     'app/frontend/library/styles/**/*.scss',
@@ -144,7 +142,7 @@ gulp.task('html', function () {
     // the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
-        'app/frontend/index.html'
+        'app/index.html'
       ],
       // CSS Selectors for UnCSS to ignore
       ignore: [
@@ -170,7 +168,7 @@ gulp.task('html', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles'], function () {
+gulp.task('wordpress', ['styles'], function () {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -179,18 +177,13 @@ gulp.task('serve', ['styles'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    // server: ['.tmp', 'app']
-    // We change the proxy to include Wordpress Path
+    // server: ['.tmp', 'app/frontend']
     proxy: 'localhost/' + wordpress_path,
   });
 
-  // Watch the .php files for auto reload
   gulp.watch(['app/**/*.php'], reload);
-  gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/**/*.js'], ['jshint']);
-  gulp.watch(['app/**/*'], reload);
 });
+
 
 // Watch files for changes & reload
 gulp.task('serve', ['styles'], function () {
@@ -202,11 +195,9 @@ gulp.task('serve', ['styles'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    // server: ['.tmp', 'app']
-    proxy: 'localhost/' + wordpress_path,
+    server: ['.tmp', 'app/frontend']
   });
 
-  gulp.watch(['app/**/*.php'], reload);
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/**/*.js'], ['jshint']);
@@ -254,7 +245,7 @@ gulp.task('pagespeed', function (cb) {
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
 gulp.task('generate-service-worker', function (callback) {
-  var rootDir = 'dist';
+  var rootDir = 'dist/frontend';
 
   swPrecache({
     // Used to avoid cache conflicts when serving on localhost.
@@ -271,10 +262,10 @@ gulp.task('generate-service-worker', function (callback) {
     },
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
-      rootDir + '/fonts/**/*.woff',
-      rootDir + '/images/**/*',
-      rootDir + '/scripts/**/*.js',
-      rootDir + '/styles/**/*.css',
+      rootDir + '/library/fonts/**/*.woff',
+      rootDir + '/library/images/**/*',
+      rootDir + '/library/scripts/**/*.js',
+      rootDir + '/library/styles/**/*.css',
       rootDir + '/*.{html,json}'
     ],
     // Translates a static file path to the relative URL that it's served from.
