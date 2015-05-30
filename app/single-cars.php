@@ -3,28 +3,32 @@
 	header('content-type: application/json; charset=utf-8');
 
 	$post_id 	= $post->ID;
-	$taxonomy = 'category'; // This can be dynamically set via a custom meta field
 
 	$page_information = array (
 		'id'	 => $post->ID,
 		'slug' => $post->post_name,
-		'template' => $GLOBALS['current_theme_template']
+    'template' => $GLOBALS['current_theme_template']
 	);
 
-	$page_content = array (
-		'title' 	=> $post->post_title,
-		'content' => $post->post_content,
+	// This is the 'Manufacturer' Taxonomy
+	$manufacturer = get_field('manufacturer', $post_id);
+
+	$manufacturer = array (
+		'name' => $manufacturer->name,
+		'slug' => $manufacturer->slug
 	);
 
-	// Global Includes
-	// -- Taxonomy Loop
-	include('includes/loop-taxonomy.php');
+	$car = array (
+		'manufacturer' => $manufacturer,
+		'name' 	  		 => $post->post_title,
+		'description'  => get_field('description', $post_id),
+		'models'			 => get_field('models', $post_id)
+	);
 
 	// JSON Data that displays when viewing the Page
 	$json_data = array(
 		'page_information' => $page_information,
-		'page_content' 		 => $page_content,
-		'taxonomy'		 		 => $taxonomy_term_list
+		'car' 		 				 => $car
 	);
 
 	// JSON Callback Information
