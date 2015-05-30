@@ -36,6 +36,8 @@ var fs          = require('fs');
 var path        = require('path');
 var packageJson = require('./package.json');
 
+var modRewrite  = require('connect-modrewrite');
+
 // Lint JavaScript
 gulp.task('jshint', function () {
   return gulp.src([
@@ -195,7 +197,12 @@ gulp.task('serve', ['styles'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: ['.tmp', 'app/frontend']
+    server: ['.tmp', 'app/frontend'],
+    middleware: [
+      modRewrite([
+        '!\.html|\.js|\.css|\.png|\.svg|\.woff|\.ttf|\.mp4|\.gif|\.jpg$ /index.html [L]'
+      ])
+    ]
   });
 
   gulp.watch(['app/**/*.html'], reload);
