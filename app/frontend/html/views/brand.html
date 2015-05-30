@@ -1,0 +1,10 @@
+<h1>{{pageContent.title}}</h1>
+<p ng-bind-html="pageContent.content"></p>
+<ul>
+  <li ng-repeat="car in pageContent.cars">
+    <a ng-href="{{car.brand}}/{{car.slug}}">
+      <img ng-src="{{car.image}}" />
+      <span ng-bind-html="car.name"></span>
+    </a>
+  </li>
+</ul>

@@ -17,6 +17,21 @@
     .when('/', {
       templateUrl: 'html/views/main.html',
       controller: 'mainCtrl'
+    })
+    // Manufacturers Page
+    .when('/manufacturers/', {
+      templateUrl: 'html/views/manufacturers.html',
+      controller: 'manufacturersCtrl'
+    })
+    // Brand Page
+    .when('/manufacturers/:brand', {
+      templateUrl: 'html/views/brand.html',
+      controller: 'brandCtrl'
+    })
+    // Car Page
+    .when('/:brand/:car', {
+      templateUrl: 'html/views/car.html',
+      controller: 'carCtrl'
     });
 
     $locationProvider.html5Mode(true);

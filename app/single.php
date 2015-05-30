@@ -13,7 +13,7 @@
 
 	$page_content = array (
 		'title' 	=> $post->post_title,
-		'content' => $post->post_content,
+		'content' => $post->post_content
 	);
 
 	// Global Includes

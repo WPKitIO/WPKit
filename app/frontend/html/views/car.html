@@ -1,0 +1,13 @@
+<img ng-src="{{car.image}}" />
+
+<h1>{{car.name}}</h1>
+
+<p ng-bind-html="car.description"></p>
+
+<ul>
+  <li ng-repeat="model in car.models">
+    <img ng-src="{{model.image}}" />
+    <span ng-bind-html="model.name"></span>
+    <span>${{model.msrp}}</span>
+  </li>
+</ul>

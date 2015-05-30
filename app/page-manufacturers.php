@@ -1,5 +1,8 @@
 <?php
-	// This sets the page to display JSON data
+	/*
+	Template Name: Page - Manufacturers
+	*/
+
 	header('content-type: application/json; charset=utf-8');
 
 	$post_id 	= $post->ID;
@@ -10,26 +13,29 @@
     'template' => $GLOBALS['current_theme_template']
 	);
 
-	// This is the 'Manufacturer' Taxonomy
-	$manufacturer = get_field('manufacturer', $post_id);
+	$taxonomy = 'manufacturers';
+	$terms = get_terms( $taxonomy);
 
-	$manufacturer = array (
-		'name' => $manufacturer->name,
-		'slug' => $manufacturer->slug
-	);
+	if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){
+		foreach ( $terms as $term ) {
+			$term_content = array (
+				'name' => $term->name,
+				'slug' => $term->slug
+			);
+			$manufacturer_list[] = $term_content;
+		}
+ 	}
 
-	$car = array (
-		'manufacturer'	=> $manufacturer,
-		'name' 	  		 	=> $post->post_title,
-		'description'  	=> get_field('description', $post_id),
-		'image' 				=> get_field('featured_image', $post_id),
-		'models'			 	=> get_field('models', $post_id)
+	$page_content = array (
+		'title' 	=> $post->post_title,
+		'content' => $post->post_content,
+		'manufacturers' => $manufacturer_list,
 	);
 
 	// JSON Data that displays when viewing the Page
 	$json_data = array(
 		'page_information' => $page_information,
-		'car' 		 				 => $car
+		'page_content' 		 => $page_content,
 	);
 
 	// JSON Callback Information

@@ -1,0 +1,7 @@
+<h1>{{pageContent.title}}</h1>
+<p ng-bind-html="pageContent.content"></p>
+<ul class="clearfix">
+  <li ng-repeat="manufacturer in pageContent.manufacturers">
+    <a href="manufacturers/{{manufacturer.slug}}" ng-bind-html="manufacturer.name"></a>
+  </li>
+</ul>

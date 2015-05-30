@@ -3,7 +3,6 @@
 	header('content-type: application/json; charset=utf-8');
 
 	$post_id 	= $post->ID;
-	$taxonomy = 'category'; // This can be dynamically set via a custom meta field
 
 	$page_information = array (
 		'id'	 => $post->ID,
