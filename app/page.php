@@ -6,8 +6,8 @@
 	$taxonomy = 'category'; // This can be dynamically set via a custom meta field
 
 	$page_information = array (
-		'id'	 		 => $post->ID,
-		'slug' 		 => $post->post_name,
+		'id'	 => $post->ID,
+		'slug' => $post->post_name,
 	);
 
 	$page_content = array (
