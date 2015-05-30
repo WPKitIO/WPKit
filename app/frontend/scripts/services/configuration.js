@@ -1,11 +1,6 @@
-(function () {
+'use strict';
 
-  'use strict';
-
-  var wpKit = angular.module('wpKit');
-
-  wpKit.constant('CONFIG', {
-    apiBaseUrl : 'localhost/wpkit'
-  });
-
-})();
+angular.module('wpKit')
+.constant('CONFIG', {
+  apiBaseUrl : 'localhost/wpkit'
+});

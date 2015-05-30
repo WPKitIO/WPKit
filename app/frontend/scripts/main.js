@@ -16,8 +16,7 @@
  *  limitations under the License
  *
  */
-(function () {
-  'use strict';
+'use strict';
 
   var querySelector = document.querySelector.bind(document);
 
@@ -98,4 +97,3 @@
   }
 
   // Your custom JavaScript goes here
-})();

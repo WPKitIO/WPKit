@@ -1,16 +1,12 @@
-(function () {
+'use strict';
 
-  'use strict';
+angular.module('wpKit')
+.controller('mainCtrl', function ($scope, mainFactory) {
 
-  var wpKit = angular.module('wpKit');
-
-  wpKit.controller('mainCtrl', function ($scope, mainFactory) {
-
-    mainFactory.getData( function(data) {
-    	$scope.pageInformation = data.page_information;
-    	$scope.pageContent     = data.page_content;
-    }, function(err){
-      console.error(err);
-    });
+  mainFactory.getData( function(data) {
+  	$scope.pageInformation = data.page_information;
+  	$scope.pageContent     = data.page_content;
+  }, function(err){
+    console.error(err);
   });
-})();
+});
