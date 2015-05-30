@@ -38,26 +38,45 @@
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
+    <header class="app-bar promote-layer">
+      <div class="app-bar-container">
+        <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
+        <h1 class="logo">Web <strong>Starter Kit</strong></h1>
+        <section class="app-bar-actions">
+        <!-- Put App Bar Buttons Here -->
+        <!-- e.g <button><i class="icon icon-star"></i></button> -->
+        </section>
+      </div>
+    </header>
+
+    <nav class="navdrawer-container promote-layer">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#hello">Hello</a></li>
+        <li><a href="#get-started">Get Started</a></li>
+        <li><a href="styleguide.html">Style Guide</a></li>
+      </ul>
+    </nav>
 
     <main ng-view></main>
 
     <!-- build:js(app/) ../../scripts/main.min.js -->
       <!-- VENDOR SCRIPTS -->
-      <script src="library/scripts/vendor/angular/angular.js"></script>
-      <script src="library/scripts/vendor/angular-resource/angular-resource.js"></script>
-      <script src="library/scripts/vendor/angular-route/angular-route.js"></script>
-      <script src="library/scripts/vendor/angular-sanitize/angular-sanitize.js"></script>
+      <script src="scripts/vendor/angular/angular.js"></script>
+      <script src="scripts/vendor/angular-resource/angular-resource.js"></script>
+      <script src="scripts/vendor/angular-route/angular-route.js"></script>
+      <script src="scripts/vendor/angular-sanitize/angular-sanitize.js"></script>
 
-      <script src="library/scripts/app.js"></script>
+      <script src="scripts/app.js"></script>
       <!-- Controllers -->
-      <script src="library/scripts/controllers/mainCtrl.js"></script>
+      <script src="scripts/controllers/mainCtrl.js"></script>
 
       <!-- Services -->
-      <script src="library/scripts/services/configuration.js"></script>
-      <script src="library/scripts/services/mainFactory.js"></script>
+      <script src="scripts/services/configuration.js"></script>
+      <script src="scripts/services/mainFactory.js"></script>
 
       <!-- Other -->
-      <script src="library/scripts/main.js"></script>
+      <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

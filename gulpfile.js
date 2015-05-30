@@ -39,9 +39,9 @@ var packageJson = require('./package.json');
 // Lint JavaScript
 gulp.task('jshint', function () {
   return gulp.src([
-    'app/frontend/library/scripts/**/*.js',
-    '!app/frontend/library/scripts/angularjs/**/*',
-    '!app/frontend/library/scripts/vendor/**/*'
+    'app/frontend/scripts/**/*.js',
+    '!app/frontend/scripts/angularjs/**/*',
+    '!app/frontend/scripts/vendor/**/*'
   ])
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
@@ -51,12 +51,12 @@ gulp.task('jshint', function () {
 
 // Optimize images
 gulp.task('images', function () {
-  return gulp.src('app/frontend/library/images/**/*')
+  return gulp.src('app/frontend/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true
     })))
-    .pipe(gulp.dest('dist/frontend/library/images'))
+    .pipe(gulp.dest('dist/frontend/images'))
     .pipe($.size({title: 'images'}));
 });
 
@@ -76,10 +76,10 @@ gulp.task('copy', function () {
 // Copy web fonts to dist
 gulp.task('fonts', function () {
   return gulp.src([
-    'app/library/fonts/**',
-    '!app/library/fonts/vendor'
+    'app/fonts/**',
+    '!app/fonts/vendor'
   ])
-    .pipe(gulp.dest('dist/frontend/library/fonts'))
+    .pipe(gulp.dest('dist/frontend/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
 
@@ -100,8 +100,8 @@ gulp.task('styles', function () {
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    'app/frontend/library/styles/**/*.scss',
-    '!app/frontend/library/styles/vendor'
+    'app/frontend/styles/**/*.scss',
+    '!app/frontend/styles/vendor'
   ])
     .pipe($.changed('.tmp/styles', {extension: '.css,scss'}))
     .pipe($.sourcemaps.init())
@@ -113,21 +113,21 @@ gulp.task('styles', function () {
     // Concatenate and minify styles
     .pipe($.if('*.css', $.csso()))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('dist/frontend/library/styles'))
+    .pipe(gulp.dest('dist/frontend/styles'))
     .pipe($.size({title: 'styles'}));
 })
 
 // Concatenate and minify JavaScript
 gulp.task('scripts', function () {
   var sources = [
-    'app/frontend/library/scripts/**/*.js',
-    '!app/frontend/library/scripts/vendor'
+    'app/frontend/scripts/**/*.js',
+    '!app/frontend/scripts/vendor'
   ];
   return gulp.src(sources)
     .pipe($.concat('main.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
-    .pipe(gulp.dest('dist/frontend/library/scripts'))
+    .pipe(gulp.dest('dist/frontend/scripts'))
     .pipe($.size({title: 'scripts'}));
 });
 
@@ -262,10 +262,10 @@ gulp.task('generate-service-worker', function (callback) {
     },
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
-      rootDir + '/library/fonts/**/*.woff',
-      rootDir + '/library/images/**/*',
-      rootDir + '/library/scripts/**/*.js',
-      rootDir + '/library/styles/**/*.css',
+      rootDir + '/fonts/**/*.woff',
+      rootDir + '/images/**/*',
+      rootDir + '/scripts/**/*.js',
+      rootDir + '/styles/**/*.css',
       rootDir + '/*.{html,json}'
     ],
     // Translates a static file path to the relative URL that it's served from.
@@ -292,11 +292,11 @@ gulp.task('generate-service-worker', function (callback) {
 gulp.task('bower', function() {
   // Copy Fonts
   gulp.src('./bower_components/**/*.{eot,otf,svg,ttf,woff,woff2}')
-    .pipe(gulp.dest('app/frontend/library/fonts/vendor'))
+    .pipe(gulp.dest('app/frontend/fonts/vendor'))
   // Copy Scripts
   gulp.src('./bower_components/**/*.js')
-    .pipe(gulp.dest('app/frontend/library/scripts/vendor'))
+    .pipe(gulp.dest('app/frontend/scripts/vendor'))
   // Copy Styles
   gulp.src('./bower_components/**/*.{css,scss}')
-    .pipe(gulp.dest('app/frontend/library/styles/vendor'))
+    .pipe(gulp.dest('app/frontend/styles/vendor'))
 });

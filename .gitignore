@@ -1,7 +1,7 @@
 #App
-app/frontend/library/fonts/vendor
-app/frontend/library/scripts/vendor
-app/frontend/library/styles/vendor
+app/frontend/fonts/vendor
+app/frontend/scripts/vendor
+app/frontend/styles/vendor
 
 #Bower
 bower_components
