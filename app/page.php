@@ -7,6 +7,7 @@
 	$page_information = array (
 		'id'	 => $post->ID,
 		'slug' => $post->post_name,
+    'template' => $GLOBALS['current_theme_template']
 	);
 
 	$page_content = array (
