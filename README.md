@@ -21,13 +21,8 @@ Run `bower install`
 
 
 
-To start Front End Sample, rub `gulp serve`
+To start Front End Sample, run `gulp serve`
 
-
-There are two HTML starting points, from which you can choose:
-
-- `index.html` - (IE10+) the default starting point, containing layout and a slide-out menu
-- `basic.html` - (IE8+) no layout, but still includes our minimal mobile best-practices
 
 We are using Web Starter Kit (WSK), be sure to look over the [installation docs](docs/install.md) to verify your environment is prepared to run WSK.
 Once you have verified that your system can run WSK, check out the [commands](docs/commands.md) available to get started.
